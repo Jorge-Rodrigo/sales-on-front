@@ -9,22 +9,27 @@ function App() {
   const [listOn, setListOn] = useState(false);
 
   return (
-    <>
-      <ToastContainer />
+    <main>
       <h1>Sales On!</h1>
+      <h2>Cadastre suas vendas!</h2>
       {!listOn && (
         <>
-          <button onClick={() => setListOn(true)}>Lista de vendas</button>
+          <button className="mainButton" onClick={() => setListOn(true)}>
+            Lista de vendas
+          </button>
           <Form />
         </>
       )}
       {listOn && (
         <>
-          <button onClick={() => setListOn(false)}>Cadastrar Venda</button>
+          <button className="mainButton" onClick={() => setListOn(false)}>
+            Cadastrar Venda
+          </button>
           <List />
         </>
       )}
-    </>
+      <ToastContainer />
+    </main>
   );
 }
 

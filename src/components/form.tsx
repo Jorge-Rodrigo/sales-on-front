@@ -6,6 +6,7 @@ import {
   installmentInterface,
 } from "../interface/formRequest";
 import { notifyError, notifySucess } from "../services/toastfy";
+import "../style/form.style.css";
 
 function Form() {
   const [formData, setFormData] = useState<formRequestInterface>(initialObject);
@@ -128,23 +129,24 @@ function Form() {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Nome do Cliente: </label>
+    <form className="formSale" onSubmit={handleSubmit}>
+      <label className="clientNameLabel">Nome do Cliente: </label>
       <input
         type="text"
         name="name"
         defaultValue={formData.client.name}
         onChange={handleClientChange}
+        className="clientName"
       />
-      <div>
+      <div className="productButton">
         <h2>Produtos</h2>
         <button type="button" onClick={addProduct}>
           Adicionar Produto
         </button>
       </div>
-      <div>
+      <div className="productsMainForm">
         {formData.products.map((product, index) => (
-          <div key={index}>
+          <div key={index} className="productForm">
             <label>Nome do Produto:</label>
             <input
               type="text"
@@ -172,7 +174,7 @@ function Form() {
           </div>
         ))}
       </div>
-      <div>
+      <div className="paymentForm">
         <label>Método de Pagamento: </label>
         <select
           name="paymentMethod"
@@ -183,7 +185,7 @@ function Form() {
           <option value="Parcelado">Parcelado</option>
         </select>
       </div>
-      <div>
+      <div className="portionForm">
         <label>Número de Parcelas: </label>
         <input
           type="number"
@@ -193,36 +195,40 @@ function Form() {
         />
       </div>
       {formData.paymentMethod === "Parcelado" && (
-        <div>
+        <div className="portionButton">
           <h2>Parcelas</h2>
           <button type="button" onClick={addInstallment}>
             Adicionar Parcela
           </button>
         </div>
       )}
-      <div>
+      <div className="portionDetailForm">
         {installments.map((installment: installmentInterface, index: any) => (
           <div key={index}>
-            <label>Data da Parcela:</label>
+            <label>Data:</label>
             <input
               type="date"
               name={`date`}
               defaultValue={installment.date}
               onChange={(e) => handleInstallmentChange(index, e)}
               required
+              className="dateInput"
             />
-            <label>Preço da Parcela:</label>
+            <label>Preço:</label>
             <input
               type="number"
               name={`price`}
               defaultValue={installment.price}
               onChange={(e) => handleInstallmentChange(index, e)}
               required
+              className="priceInput"
             />
           </div>
         ))}
       </div>
-      <button type="submit">Enviar</button>
+      <button type="submit" className="submitFormButton">
+        Enviar
+      </button>
     </form>
   );
 }
