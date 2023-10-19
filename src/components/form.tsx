@@ -19,10 +19,6 @@ function Form() {
     customInstallmentPrice: [],
   });
   const [installments, setInstallments] = useState([]) as any;
-  const [customDueDates, setCustomDueDates] = useState([]) as any;
-  const [customInstallmentPrice, setCustomInstallmentPrice] = useState(
-    []
-  ) as any;
 
   const handleClientChange = (e: any) => {
     const { name, value } = e.target;

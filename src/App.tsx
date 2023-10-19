@@ -1,15 +1,28 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
 import Form from "./components/form";
+import List from "./components/list";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [listOn, setListOn] = useState(false);
 
   return (
     <>
-      <Form />
+      <h1>Sales On!</h1>
+
+      {!listOn && (
+        <>
+          <button onClick={() => setListOn(true)}>Lista de vendas</button>
+          <Form />
+        </>
+      )}
+      {listOn && (
+        <>
+          <button onClick={() => setListOn(false)}>Cadastrar Venda</button>
+          <List />
+        </>
+      )}
     </>
   );
 }
