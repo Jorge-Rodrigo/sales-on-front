@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { api } from "../services/api";
+import "../style/list.style.css";
 
 function List() {
   const [sales, setSales] = useState([]) as any;
@@ -29,29 +30,48 @@ function List() {
     }
   };
   return (
-    <div>
-      <h1>Lista de Vendas</h1>
+    <div className="listMain">
+      <h2>Lista de Vendas</h2>
       {loading ? (
         <p>Carregando...</p>
       ) : (
         <ul>
           {sales.map((sale: any) => (
             <li key={sale.id}>
-              <h2>Cliente: {sale.client.name}</h2>
-              <p>Preço total: {sale.totalPrice}</p>
-              <p>metodo de pagamento: {sale.paymentMethod}</p>
-              <p>{sale.portion} parcelas</p>
+              <div className="saleInfo">
+                <div className="clientInfo">
+                  {!sale.client.name && <h4>Cliente não cadastrado</h4>}
+                  {sale.client.name && <h4>{sale.client.name}</h4>}
+                  <h4 className="price">R${sale.totalPrice}</h4>
+                </div>
+                <p className="paymenteMethod">
+                  Método de pagamento: <span>{sale.paymentMethod}</span>
+                </p>
+                <p className="portion">
+                  Quantidade de Parcelas: <span>{sale.portion}</span>
+                </p>
+                <button className="portionDetail">
+                  Ver Detalhes do Parcelamento
+                </button>
+              </div>
+
               <h3>Produtos:</h3>
               {sale.products.map((prod: any) => (
-                <div>
-                  <h4>{prod.name}</h4>
-                  <p>R$ {prod.price}</p>
-                  <p>Quantidade: {prod.amount}</p>
+                <div className="productInfo">
+                  <h4>{prod.name} - </h4>
+                  <p className="productPrice">R$ {prod.price} - </p>
+                  <p>Quant: {prod.amount}</p>
                 </div>
               ))}
-              <button onClick={() => deleteSale(Number(sale.id))}>
-                Excluir venda
-              </button>
+              <div className="buttonsDiv">
+                <button>Editar venda</button>
+                <button
+                  className="deleteButton"
+                  onClick={() => deleteSale(Number(sale.id))}
+                >
+                  Excluir venda
+                </button>
+              </div>
             </li>
           ))}
         </ul>

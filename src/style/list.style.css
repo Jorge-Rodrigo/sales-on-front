@@ -1,0 +1,85 @@
+.listMain {
+  max-width: 1100px;
+}
+.listMain > h2 {
+  color: #2574f4;
+  font-size: 30px;
+}
+.listMain > ul {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 10px;
+}
+.listMain > ul > li {
+  width: 30%;
+  margin-bottom: 15px;
+  border: 2px solid #6497b1;
+  border-radius: 8px;
+  padding: 10px;
+}
+.saleInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+.clientInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+}
+.price {
+  color: #2574f4;
+}
+.paymenteMethod {
+  font-size: 16px;
+}
+.paymenteMethod > span {
+  color: #2574f4;
+  font-weight: 500;
+}
+.portion {
+  font-size: 16px;
+}
+.portion > span {
+  color: #2574f4;
+  font-weight: 500;
+}
+.listMain > ul > li > h3 {
+  color: #6497b1;
+  font-size: 20px;
+}
+.productInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.productInfo > h4 {
+  color: #2574f4;
+}
+.productPrice {
+  font-weight: 600;
+}
+.buttonsDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.deleteButton {
+  color: #ae0001;
+  border: 2px solid #ae0001;
+}
+.portionDetail {
+  width: 90%;
+  background-color: #ced3ff;
+  color: #2574f4;
+}
