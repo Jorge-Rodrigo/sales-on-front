@@ -5,6 +5,7 @@ import {
   formRequestInterface,
   installmentInterface,
 } from "../interface/formRequest";
+import { notifyError, notifySucess } from "../services/toastfy";
 
 function Form() {
   const [formData, setFormData] = useState<formRequestInterface>(initialObject);
@@ -81,10 +82,10 @@ function Form() {
     api
       .post("/sales", data)
       .then((response) => {
-        console.log("Requisição POST bem-sucedida:", response.data);
+        notifySucess("Venda cadastrada com Sucesso");
       })
       .catch((error) => {
-        console.error("Erro na requisição POST:", error);
+        notifyError(error.response.data.message);
       });
     console.log(data);
   };
@@ -200,7 +201,7 @@ function Form() {
         </div>
       )}
       <div>
-        {installments.map((installment: any, index: any) => (
+        {installments.map((installment: installmentInterface, index: any) => (
           <div key={index}>
             <label>Data da Parcela:</label>
             <input
