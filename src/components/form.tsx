@@ -1,24 +1,14 @@
 import { useState } from "react";
 import { api } from "../services/api";
+import { initialObject } from "../utils/exampleObject";
+import {
+  formRequestInterface,
+  installmentInterface,
+} from "../interface/formRequest";
 
 function Form() {
-  const [formData, setFormData] = useState({
-    client: {
-      name: "",
-    },
-    products: [
-      {
-        name: "",
-        price: "",
-        amount: "",
-      },
-    ],
-    paymentMethod: "À Vista",
-    portion: 1,
-    customDueDates: [],
-    customInstallmentPrice: [],
-  });
-  const [installments, setInstallments] = useState([]) as any;
+  const [formData, setFormData] = useState<formRequestInterface>(initialObject);
+  const [installments, setInstallments] = useState<installmentInterface[]>([]);
 
   const handleClientChange = (e: any) => {
     const { name, value } = e.target;
@@ -31,7 +21,7 @@ function Form() {
     }));
   };
 
-  const handleProductChange = (index: any, e: any) => {
+  const handleProductChange = (index: number, e: any) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -98,6 +88,7 @@ function Form() {
       });
     console.log(data);
   };
+
   const addInstallment = () => {
     setInstallments([...installments, { date: "", price: "" }]);
 
@@ -108,7 +99,7 @@ function Form() {
     }));
   };
 
-  const handleInstallmentChange = (index: any, e: any) => {
+  const handleInstallmentChange = (index: number, e: any) => {
     const { name, value } = e.target;
     const updatedInstallments = [...installments];
     updatedInstallments[index] = {
@@ -145,12 +136,12 @@ function Form() {
         onChange={handleClientChange}
       />
       <div>
+        <h2>Produtos</h2>
         <button type="button" onClick={addProduct}>
           Adicionar Produto
         </button>
       </div>
       <div>
-        <h2>Produtos</h2>
         {formData.products.map((product, index) => (
           <div key={index}>
             <label>Nome do Produto:</label>
@@ -202,13 +193,13 @@ function Form() {
       </div>
       {formData.paymentMethod === "Parcelado" && (
         <div>
+          <h2>Parcelas</h2>
           <button type="button" onClick={addInstallment}>
             Adicionar Parcela
           </button>
         </div>
       )}
       <div>
-        <h2>Parcelas</h2>
         {installments.map((installment: any, index: any) => (
           <div key={index}>
             <label>Data da Parcela:</label>
