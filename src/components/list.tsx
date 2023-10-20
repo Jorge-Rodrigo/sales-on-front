@@ -8,7 +8,7 @@ function List() {
   const [salePayment, setSalePayment] = useState() as any;
   const [loading, setLoading] = useState(true);
   const [selectedSaleId, setSelectedSaleId] = useState(null) as any;
-  const [selectedSaleUpdateId, setSelectedSaleUpdateId] = useState(null) as any;
+  const [selectedSale, setSelectedSale] = useState(null) as any;
 
   useEffect(() => {
     api
@@ -26,7 +26,7 @@ function List() {
 
   const deleteSale = async (id: number) => {
     try {
-      api.delete(`/sales/${id}`);
+      await api.delete(`/sales/${id}`);
 
       const response = await api.get("/sales");
       setSales(response.data);
@@ -51,7 +51,14 @@ function List() {
     setSalePayment(null);
   };
 
-  const updateSale = () => {};
+  const updateSalesList = async () => {
+    try {
+      const response = await api.get("/sales");
+      setSales(response.data);
+    } catch (error) {
+      console.error("Erro ao atualizar a lista de vendas:", error);
+    }
+  };
 
   function formatDate(dateString: any) {
     const date = new Date(dateString);
@@ -123,7 +130,7 @@ function List() {
                 </div>
               ))}
               <div className="buttonsDiv">
-                <button onClick={() => setSelectedSaleUpdateId(sale.id)}>
+                <button onClick={() => setSelectedSale(sale)}>
                   Editar venda
                 </button>
                 <button
@@ -133,8 +140,14 @@ function List() {
                   Excluir venda
                 </button>
               </div>
-              {selectedSaleUpdateId && selectedSaleUpdateId == sale.id && (
-                <FormUpdate id={selectedSaleUpdateId} />
+              {selectedSale && selectedSale.id == sale.id && (
+                <>
+                  <FormUpdate
+                    sale={selectedSale}
+                    updateSalesList={updateSalesList}
+                  />
+                  <button onClick={() => setSelectedSale(null)}>Fechar</button>
+                </>
               )}
             </li>
           ))}

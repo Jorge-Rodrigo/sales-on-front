@@ -1,14 +1,16 @@
 import { useState } from "react";
 import {
-  formRequestInterface,
+  formRequestUpdateInterface,
   installmentInterface,
 } from "../interface/formRequest";
 import { api } from "../services/api";
 import { notifySucess, notifyError } from "../services/toastfy";
 import { initialObject } from "../utils/exampleObject";
+import "../style/formUpdate.css";
 
-function FormUpdate({ id }: any) {
-  const [formData, setFormData] = useState<formRequestInterface>(initialObject);
+function FormUpdate({ sale, updateSalesList }: any) {
+  const [formData, setFormData] =
+    useState<formRequestUpdateInterface>(initialObject);
   const [installments, setInstallments] = useState<installmentInterface[]>([]);
 
   const handleClientChange = (e: any) => {
@@ -47,7 +49,7 @@ function FormUpdate({ id }: any) {
 
   const cleanData = (data: any) => {
     const cleanedData = { ...data };
-
+    console.log(cleanedData);
     cleanedData.customDueDates = cleanedData.customDueDates.filter(Boolean);
     cleanedData.customInstallmentPrice =
       cleanedData.customInstallmentPrice.filter(Boolean);
@@ -56,11 +58,8 @@ function FormUpdate({ id }: any) {
       (product: any) => product.name || product.price || product.amount
     );
 
-    const clientKeys = Object.keys(cleanedData.client);
-    for (const key of clientKeys) {
-      if (!cleanedData.client[key]) {
-        delete cleanedData.client[key];
-      }
+    if (Object.keys(cleanedData.client).length === 0) {
+      cleanedData.client = null;
     }
 
     return cleanedData;
@@ -71,9 +70,10 @@ function FormUpdate({ id }: any) {
     const cleanedData = cleanData(formData);
 
     api
-      .patch(`/sales/${id}`, cleanedData)
+      .patch(`/sales/${sale.id}`, cleanedData)
       .then((response) => {
         notifySucess("Venda atualizada com Sucesso");
+        updateSalesList();
       })
       .catch((error) => {
         notifyError(error.response.data.message);
@@ -100,7 +100,7 @@ function FormUpdate({ id }: any) {
     setInstallments(updatedInstallments);
 
     if (name === "date") {
-      const updatedDueDates: any = [...formData.customDueDates];
+      const updatedDueDates: string[] = [...(formData.customDueDates ?? [])];
       updatedDueDates[index] = value;
       setFormData((prevData) => ({
         ...prevData,
@@ -108,7 +108,7 @@ function FormUpdate({ id }: any) {
       }));
     } else if (name === "price") {
       const updatedInstallmentPrices: any = [
-        ...formData.customInstallmentPrice,
+        ...(formData.customInstallmentPrice ?? []),
       ];
       updatedInstallmentPrices[index] = value;
       setFormData((prevData) => ({
@@ -123,7 +123,7 @@ function FormUpdate({ id }: any) {
       <input
         type="text"
         name="name"
-        defaultValue={formData.client.name}
+        defaultValue={sale.client.name}
         onChange={handleClientChange}
         className="clientName"
       />
@@ -144,7 +144,7 @@ function FormUpdate({ id }: any) {
         <input
           type="number"
           name="portion"
-          defaultValue={formData.portion | 1}
+          defaultValue={formData.portion}
           onChange={handlePortionChange}
         />
       </div>

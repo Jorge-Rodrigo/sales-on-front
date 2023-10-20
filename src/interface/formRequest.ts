@@ -17,3 +17,13 @@ export interface installmentInterface {
   date: string;
   price: string;
 }
+
+export interface formRequestUpdateInterface {
+  client?: {
+    name?: string | null;
+  };
+  paymentMethod?: string;
+  portion?: number;
+  customDueDates?: string[];
+  customInstallmentPrice?: string[];
+}
