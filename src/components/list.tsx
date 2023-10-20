@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { api } from "../services/api";
 import "../style/list.style.css";
+import FormUpdate from "./formUpdate";
 
 function List() {
   const [sales, setSales] = useState([]) as any;
   const [salePayment, setSalePayment] = useState() as any;
   const [loading, setLoading] = useState(true);
   const [selectedSaleId, setSelectedSaleId] = useState(null) as any;
+  const [selectedSaleUpdateId, setSelectedSaleUpdateId] = useState(null) as any;
 
   useEffect(() => {
     api
@@ -48,6 +50,9 @@ function List() {
   const closePaymentDetail = () => {
     setSalePayment(null);
   };
+
+  const updateSale = () => {};
+
   function formatDate(dateString: any) {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
@@ -118,7 +123,9 @@ function List() {
                 </div>
               ))}
               <div className="buttonsDiv">
-                <button>Editar venda</button>
+                <button onClick={() => setSelectedSaleUpdateId(sale.id)}>
+                  Editar venda
+                </button>
                 <button
                   className="deleteButton"
                   onClick={() => deleteSale(Number(sale.id))}
@@ -126,6 +133,9 @@ function List() {
                   Excluir venda
                 </button>
               </div>
+              {selectedSaleUpdateId && selectedSaleUpdateId == sale.id && (
+                <FormUpdate id={selectedSaleUpdateId} />
+              )}
             </li>
           ))}
         </ul>
