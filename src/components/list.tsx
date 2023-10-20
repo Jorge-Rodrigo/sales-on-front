@@ -4,14 +4,16 @@ import "../style/list.style.css";
 
 function List() {
   const [sales, setSales] = useState([]) as any;
+  const [salePayment, setSalePayment] = useState() as any;
   const [loading, setLoading] = useState(true);
+  const [selectedSaleId, setSelectedSaleId] = useState(null) as any;
 
   useEffect(() => {
     api
       .get("/sales")
       .then((response) => {
         setSales(response.data);
-        console.log(response.data);
+
         setLoading(false);
       })
       .catch((error) => {
@@ -23,12 +25,36 @@ function List() {
   const deleteSale = async (id: number) => {
     try {
       api.delete(`/sales/${id}`);
+
       const response = await api.get("/sales");
       setSales(response.data);
     } catch (error) {
       console.error("Erro ao excluir a venda:", error);
     }
   };
+  const getPaymentDetail = async (id: number) => {
+    api
+      .get(`/sales/${id}/payment-plan`)
+      .then((response) => {
+        setSalePayment(response.data);
+        console.log(response.data);
+        setSelectedSaleId(id);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar a lista de vendas:", error);
+      });
+  };
+
+  const closePaymentDetail = () => {
+    setSalePayment(null);
+  };
+  function formatDate(dateString: any) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Note que o mês é base 0, então adicionamos 1.
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
   return (
     <div className="listMain">
       <h2>Lista de Vendas</h2>
@@ -50,9 +76,37 @@ function List() {
                 <p className="portion">
                   Quantidade de Parcelas: <span>{sale.portion}</span>
                 </p>
-                <button className="portionDetail">
+                <button
+                  className="portionDetail"
+                  onClick={() => getPaymentDetail(Number(sale.id))}
+                >
                   Ver Detalhes do Parcelamento
                 </button>
+                {salePayment && selectedSaleId == sale.id && (
+                  <div key={salePayment.id} className="paymentePortionDetail">
+                    <h2>R${salePayment.totalPrice}</h2>
+                    <p>Parcelas: {salePayment.portions}</p>
+                    <ul>
+                      {salePayment.allPortions &&
+                        salePayment.allPortions.map((portion: any) => (
+                          <li>
+                            <p>
+                              Preço: <span>R$ {portion.price}</span>
+                            </p>
+                            <p>
+                              Data: <span>{formatDate(portion.date)}</span>
+                            </p>
+                          </li>
+                        ))}
+                      <button
+                        className="closePaymentDetailButton"
+                        onClick={() => closePaymentDetail()}
+                      >
+                        Fechar
+                      </button>
+                    </ul>
+                  </div>
+                )}
               </div>
 
               <h3>Produtos:</h3>

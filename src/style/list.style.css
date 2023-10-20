@@ -83,3 +83,46 @@
   background-color: #ced3ff;
   color: #2574f4;
 }
+
+.paymentePortionDetail {
+  margin: 10px 0;
+
+  padding: 30px 10px;
+  background-color: #708090;
+  border: 3px solid #010057;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.paymentePortionDetail > h2 {
+  color: #010057;
+}
+
+.paymentePortionDetail > p {
+  color: #010057;
+  font-weight: 600;
+}
+.paymentePortionDetail > ul {
+  list-style: none;
+  padding: 0;
+}
+
+.paymentePortionDetail > ul > li {
+  border-bottom: 2px solid #010057;
+}
+.paymentePortionDetail > ul > li > p {
+  font-weight: 600;
+  font-size: 18px;
+}
+.paymentePortionDetail > ul > li > p > span {
+  color: #010057;
+  font-weight: 600;
+}
+.closePaymentDetailButton {
+  margin: 15px 0;
+  color: #ae0001;
+  border: 2px solid #ae0001;
+}
