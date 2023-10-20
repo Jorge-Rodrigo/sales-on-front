@@ -1,27 +1,28 @@
-# React + TypeScript + Vite
+<h1 align="center">Sales On </h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p>A Aplicação do backend Sales On</p>
 
-Currently, two official plugins are available:
+Para fazer a intalação da Aplicação localmente:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+## Como Instalar
+ 
+ **Passo 1 -** Clone o repositório do projeto para a sua máquina local usando o Git. Você pode fazer isso executando o seguinte comando no seu terminal:
+  ```
+git clone https://github.com/Jorge-Rodrigo/sales-on-front.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+**Passo 2 -** Navegue até a pasta do projeto:
+
+  ```
+  cd nome-da-pasta
+```
+
+**Passo 3 -** Instale as dependências do projeto. Certifique-se de que você tem o Node.js e o npm instalados na sua máquina. Em seguida, execute o seguinte comando:
+ ```
+ npm install
+```
+ **Passo 4 -** Inicie o servidor. Isso irá compilar o projeto e executá-lo localmente:
+
+ ```
+ npm run dev
+```
